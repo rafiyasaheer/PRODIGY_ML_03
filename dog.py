@@ -9,20 +9,19 @@ from PIL import Image
 
 
 
-# Load the model once
 model = joblib.load(r"D:\internship\SVM\model.sav")
 
-# Streamlit app title and description
+
 st.title("Dog Breed Classifier")
 st.write("Upload an image to classify it as a **cat** or **dog**!")
 
-# File uploader
+
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
 
 if uploaded_file is not None:
     st.image(uploaded_file, caption='Uploaded Image.', use_container_width=True)
 
-    # Save the uploaded file to a temporary folder
+  
     temp_folder = 'temp'
     if not os.path.exists(temp_folder):
         os.makedirs(temp_folder)
@@ -31,8 +30,7 @@ if uploaded_file is not None:
     with open(file_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
 
-    # Preprocess the image
-    # Preprocess the image
+    
   
     def preprocess_image(image_path):
               img = Image.open(image_path).convert('L')
@@ -46,7 +44,7 @@ if uploaded_file is not None:
 
     img_array = preprocess_image(file_path)
 
-    # Make a prediction
+  
     predicted_class = model.predict(img_array)[0]
 
     if predicted_class == 1:
